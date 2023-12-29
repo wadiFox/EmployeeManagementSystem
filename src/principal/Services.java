@@ -116,11 +116,13 @@ public class Services {
 		// Update an employee using id
 		
 		public void updateEmployee() {
-			System.out.println("Please enter the id to update : ");
+			System.out.print("Please enter the id to update : ");
 			id = input.nextInt();
+			boolean found = false;
 			for(Employee emp:emps) {
 				if(id==emp.getId()) {
-					System.out.println(emp);
+					found = true;
+					System.out.println("Employee to update :\n"+emp);
 					emp.setId(id);
 					System.out.println("Please enter the name : ");
 					name = input.next();
@@ -134,14 +136,56 @@ public class Services {
 					System.out.println("Please enter the salary : ");
 					salary = input.nextDouble();
 					emp.setSalary(salary);
+					System.out.println("Employee updated : " + emp); // Print the entire list or specific employee details
 					}
-
-				System.out.println("Employee update : " + emps); // Print the entire list or specific employee details
-				
 			   }
-			
+			if (!found) {
+		        System.out.println("There is no Employee with Id " + id);
+		        updateEmployee();// call the method here to continue asking for id to update if entered no existing one
+		    }
 		}
 		
+		// Search employee by id
+		
+		public void searchEmployeeById() {
+		    System.out.print("Enter the Id you want to find :");
+		    id = input.nextInt();
+		    boolean found = false;
+
+		    for (Employee emp : emps) {
+		        if (id == emp.getId()) {
+		            System.out.println(emp);
+		            found = true;
+		            break; // Break out of the loop once the employee is found
+		        }
+		    }
+
+		    if (!found) {
+		        System.out.println("There is no Employee with Id " + id);
+		        searchEmployeeById();// call the method here to continue asking for id we search if entered no existing one
+		    }
+		}
+
+		
+		// Delete employee by id
+		
+		public void deleteEmployeeById() {
+			System.out.print("Enter the Id you want to delete : ");
+			id = input.nextInt();
+			boolean found = false;
+			for(Employee emp:emps) {
+				if(id == emp.getId()) {
+					emps.remove(emp);
+					System.out.println(emp+" => deleted!!");
+					 found = true;
+			         break; // Break out of the loop once the employee is found
+				}
+			}
+			if(!found) {
+				System.out.print("There is no Employee with Id "+id+"\n");	
+				deleteEmployeeById();// call the method here to continue asking for id to delete if entered no existing one
+			}	
+		}		
 		
 }
 
